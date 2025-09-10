@@ -9,12 +9,19 @@ import {
   FileText,
   Menu,
   X,
+  Layers,
 } from "lucide-react";
 
 const menuItems = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/" },
   { id: "banners", label: "Banners", icon: Image, path: "/banners" },
   { id: "users", label: "Users", icon: Users, path: "/users" },
+  {
+    id: "service-category",
+    label: "Service Category",
+    icon: Layers,
+    path: "/service-category",
+  },
   { id: "analytics", label: "Analytics", icon: BarChart3, path: "/analytics" },
   { id: "content", label: "Content", icon: FileText, path: "/content" },
   { id: "settings", label: "Settings", icon: Settings, path: "/settings" },

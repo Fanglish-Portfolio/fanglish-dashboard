@@ -8,6 +8,8 @@ import Users from "./pages/Users";
 import Analytics from "./pages/Analytics";
 import Content from "./pages/Content";
 import Settings from "./pages/Settings";
+import ServiceCategory from "./pages/ServiceCategory";
+import ServiceDetailPage from "./components/ServiceCategory/ServiceDetailPage";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -27,6 +29,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/banners" element={<Banners />} />
+              <Route path="/service-category" element={<ServiceCategory />} />
+              <Route path="/service/:id" element={<ServiceDetailPage />} />
               <Route path="/users" element={<Users />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/content" element={<Content />} />
