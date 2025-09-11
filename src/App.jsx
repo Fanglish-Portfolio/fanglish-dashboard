@@ -18,6 +18,7 @@ import LanguageClass from "./pages/LanguageClass";
 import LanguageClassDetailPage from "./components/LanguageClass/LanguageClassDetailPage";
 import Testimonials from "./pages/Testimonials";
 import FormDataPage from "./pages/FormData";
+import StudyAbroad from "./pages/StudyAbroad";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -54,6 +55,7 @@ function App() {
               <Route path="/settings" element={<Settings />} />
               <Route path="/testimonials" element={<Testimonials />} />
               <Route path="/form-data" element={<FormDataPage />} />
+              <Route path="/study-abroad" element={<StudyAbroad />} />
             </Routes>
           </main>
         </div>

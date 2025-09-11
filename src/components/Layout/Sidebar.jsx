@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   Layers,
+  GraduationCap,
 } from "lucide-react";
 
 const menuItems = [
@@ -45,6 +46,12 @@ const menuItems = [
     label: "Language Class",
     icon: Layers,
     path: "/language-class",
+  },
+  {
+    id: "study-abroad",
+    label: "Study Abroad",
+    icon: GraduationCap,
+    path: "/study-abroad",
   },
   // { id: "analytics", label: "Analytics", icon: BarChart3, path: "/analytics" },
   // { id: "content", label: "Content", icon: FileText, path: "/content" },
