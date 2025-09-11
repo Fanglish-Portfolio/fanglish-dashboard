@@ -15,16 +15,41 @@ import {
 const menuItems = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/" },
   { id: "banners", label: "Banners", icon: Image, path: "/banners" },
-  { id: "users", label: "Users", icon: Users, path: "/users" },
+  {
+    id: "testimonials",
+    label: "Testimonials",
+    icon: Image,
+    path: "/testimonials",
+  },
+  // { id: "users", label: "Users", icon: Users, path: "/users" },
   {
     id: "service-category",
     label: "Service Category",
     icon: Layers,
     path: "/service-category",
   },
-  { id: "analytics", label: "Analytics", icon: BarChart3, path: "/analytics" },
-  { id: "content", label: "Content", icon: FileText, path: "/content" },
-  { id: "settings", label: "Settings", icon: Settings, path: "/settings" },
+  {
+    id: "blog-category",
+    label: "Blog Category",
+    icon: Layers,
+    path: "/blog-category",
+  },
+  {
+    id: "package-category",
+    label: "Package Category",
+    icon: Layers,
+    path: "/package-category",
+  },
+  {
+    id: "language-class",
+    label: "Language Class",
+    icon: Layers,
+    path: "/language-class",
+  },
+  // { id: "analytics", label: "Analytics", icon: BarChart3, path: "/analytics" },
+  // { id: "content", label: "Content", icon: FileText, path: "/content" },
+  { id: "form-data", label: "Form Data", icon: FileText, path: "/form-data" },
+  // { id: "settings", label: "Settings", icon: Settings, path: "/settings" },
 ];
 
 export default function Sidebar({ isOpen, onToggle }) {

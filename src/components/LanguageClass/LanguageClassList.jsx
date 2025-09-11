@@ -6,9 +6,9 @@ import {
   deleteServiceCategory,
 } from "../../services/categoryService";
 import ConfirmModal from "../UI/ConfirmModal";
-import ServiceCategoryForm from "./ServiceCategoryForm";
+import LanguageClassForm from "./LanguageClassForm";
 
-const ServiceCategoryList = () => {
+const LanguageClassList = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,15 +27,12 @@ const ServiceCategoryList = () => {
       setError(null);
       const data = await getServiceCategories();
       const filteredData = data.filter(
-        (category) => category.serviceCategory === "services"
+        (category) => category.serviceCategory === "language-class"
       );
-      // console.log(data);
       setCategories(filteredData);
     } catch (err) {
       setError(
-        err instanceof Error
-          ? err.message
-          : "Failed to fetch service categories"
+        err instanceof Error ? err.message : "Failed to fetch categories"
       );
     } finally {
       setLoading(false);
@@ -47,7 +44,7 @@ const ServiceCategoryList = () => {
   }, [categoryRefreshTrigger]);
 
   const handleViewDetail = (category) => {
-    navigate(`/service/${category._id}`);
+    navigate(`/language-class/${category._id}`);
   };
 
   const handleCategorySuccess = () => {
@@ -66,10 +63,7 @@ const ServiceCategoryList = () => {
       closeDelete();
       fetchCategories();
     } catch (err) {
-      // Simple alert to stay concise
-      alert(
-        err instanceof Error ? err.message : "Failed to delete service category"
-      );
+      alert(err instanceof Error ? err.message : "Failed to delete category");
       setDeleteState((s) => ({ ...s, loading: false }));
     }
   };
@@ -79,7 +73,7 @@ const ServiceCategoryList = () => {
       <div className="flex items-center justify-center h-64">
         <div className="flex items-center space-x-2 text-gray-500">
           <RefreshCw className="animate-spin" size={20} />
-          <span>Loading service categories...</span>
+          <span>Loading language classes...</span>
         </div>
       </div>
     );
@@ -106,10 +100,10 @@ const ServiceCategoryList = () => {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">
-              Service Categories
+              Language Classes
             </h2>
             <p className="text-gray-600 mt-1">
-              Manage your service categories and content
+              Manage your language class content
             </p>
           </div>
           <div className="flex items-center space-x-3">
@@ -125,7 +119,7 @@ const ServiceCategoryList = () => {
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
               <Plus size={16} />
-              <span>New Category</span>
+              <span>New Class</span>
             </button>
           </div>
         </div>
@@ -143,17 +137,17 @@ const ServiceCategoryList = () => {
               </svg>
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No service categories yet
+              No language classes yet
             </h3>
             <p className="text-gray-600 mb-4">
-              Create your first service category to get started
+              Create your first class to get started
             </p>
             <button
               onClick={() => setShowCategoryForm(true)}
               className="flex items-center space-x-2 mx-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
               <Plus size={16} />
-              <span>Create First Category</span>
+              <span>Create First Class</span>
             </button>
           </div>
         ) : (
@@ -175,13 +169,7 @@ const ServiceCategoryList = () => {
                         const parent = target.parentElement;
                         if (parent) {
                           parent.innerHTML = `
-                            <div class="flex items-center justify-center h-full">
-                              <div class="text-gray-400">
-                                <svg width="48" height="48" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-                                </svg>
-                              </div>
-                            </div>
+                            <div class=\"flex items-center justify-center h-full\">\n                              <div class=\"text-gray-400\">\n                                <svg width=\"48\" height=\"48\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n                                  <path d=\"M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\"/>\n                                </svg>\n                              </div>\n                            </div>
                           `;
                         }
                       }}
@@ -231,23 +219,21 @@ const ServiceCategoryList = () => {
         )}
       </div>
 
-      {/* Service Category Form Modal */}
       {showCategoryForm && (
-        <ServiceCategoryForm
-          category="services"
+        <LanguageClassForm
+          category="language-class"
           onClose={() => setShowCategoryForm(false)}
           onSuccess={handleCategorySuccess}
         />
       )}
 
-      {/* Delete Confirmation */}
       <ConfirmModal
         isOpen={deleteState.open}
         onClose={closeDelete}
         onConfirm={confirmDelete}
         isLoading={deleteState.loading}
-        title="Delete service category"
-        message="This action cannot be undone. The category will be permanently removed."
+        title="Delete language class"
+        message="This action cannot be undone. The class will be permanently removed."
         confirmText="Delete"
         type="danger"
       />
@@ -255,4 +241,4 @@ const ServiceCategoryList = () => {
   );
 };
 
-export default ServiceCategoryList;
+export default LanguageClassList;

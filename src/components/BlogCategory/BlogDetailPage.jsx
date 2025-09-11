@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Calendar, Tag, Edit } from "lucide-react";
 import { getServiceCategoryById } from "../../services/categoryService";
-import ServiceCategoryForm from "./ServiceCategoryForm";
+import BlogCategoryForm from "./BlogCategoryForm";
 
 const ServiceDetailPage = () => {
   const { id } = useParams();
@@ -212,8 +212,8 @@ const ServiceDetailPage = () => {
 
       {/* Edit Form Modal */}
       {showEditForm && (
-        <ServiceCategoryForm
-          category="services"
+        <BlogCategoryForm
+          category="blog"
           onClose={() => setShowEditForm(false)}
           onSuccess={handleEditSuccess}
           editData={category}

@@ -6,9 +6,9 @@ import {
   deleteServiceCategory,
 } from "../../services/categoryService";
 import ConfirmModal from "../UI/ConfirmModal";
-import ServiceCategoryForm from "./ServiceCategoryForm";
+import PackageCategoryForm from "./PackageCategoryForm";
 
-const ServiceCategoryList = () => {
+const PackageCategoryList = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,15 +27,12 @@ const ServiceCategoryList = () => {
       setError(null);
       const data = await getServiceCategories();
       const filteredData = data.filter(
-        (category) => category.serviceCategory === "services"
+        (category) => category.serviceCategory === "packages"
       );
-      // console.log(data);
       setCategories(filteredData);
     } catch (err) {
       setError(
-        err instanceof Error
-          ? err.message
-          : "Failed to fetch service categories"
+        err instanceof Error ? err.message : "Failed to fetch categories"
       );
     } finally {
       setLoading(false);
@@ -47,7 +44,7 @@ const ServiceCategoryList = () => {
   }, [categoryRefreshTrigger]);
 
   const handleViewDetail = (category) => {
-    navigate(`/service/${category._id}`);
+    navigate(`/package/${category._id}`);
   };
 
   const handleCategorySuccess = () => {
@@ -66,10 +63,7 @@ const ServiceCategoryList = () => {
       closeDelete();
       fetchCategories();
     } catch (err) {
-      // Simple alert to stay concise
-      alert(
-        err instanceof Error ? err.message : "Failed to delete service category"
-      );
+      alert(err instanceof Error ? err.message : "Failed to delete category");
       setDeleteState((s) => ({ ...s, loading: false }));
     }
   };
@@ -79,7 +73,7 @@ const ServiceCategoryList = () => {
       <div className="flex items-center justify-center h-64">
         <div className="flex items-center space-x-2 text-gray-500">
           <RefreshCw className="animate-spin" size={20} />
-          <span>Loading service categories...</span>
+          <span>Loading package categories...</span>
         </div>
       </div>
     );
@@ -106,11 +100,9 @@ const ServiceCategoryList = () => {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">
-              Service Categories
+              Package Categories
             </h2>
-            <p className="text-gray-600 mt-1">
-              Manage your service categories and content
-            </p>
+            <p className="text-gray-600 mt-1">Manage your package categories</p>
           </div>
           <div className="flex items-center space-x-3">
             <button
@@ -125,7 +117,7 @@ const ServiceCategoryList = () => {
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
               <Plus size={16} />
-              <span>New Category</span>
+              <span>New Package</span>
             </button>
           </div>
         </div>
@@ -143,17 +135,17 @@ const ServiceCategoryList = () => {
               </svg>
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No service categories yet
+              No packages yet
             </h3>
             <p className="text-gray-600 mb-4">
-              Create your first service category to get started
+              Create your first package to get started
             </p>
             <button
               onClick={() => setShowCategoryForm(true)}
               className="flex items-center space-x-2 mx-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
               <Plus size={16} />
-              <span>Create First Category</span>
+              <span>Create First Package</span>
             </button>
           </div>
         ) : (
@@ -231,23 +223,21 @@ const ServiceCategoryList = () => {
         )}
       </div>
 
-      {/* Service Category Form Modal */}
       {showCategoryForm && (
-        <ServiceCategoryForm
-          category="services"
+        <PackageCategoryForm
+          category="packages"
           onClose={() => setShowCategoryForm(false)}
           onSuccess={handleCategorySuccess}
         />
       )}
 
-      {/* Delete Confirmation */}
       <ConfirmModal
         isOpen={deleteState.open}
         onClose={closeDelete}
         onConfirm={confirmDelete}
         isLoading={deleteState.loading}
-        title="Delete service category"
-        message="This action cannot be undone. The category will be permanently removed."
+        title="Delete package"
+        message="This action cannot be undone. The package will be permanently removed."
         confirmText="Delete"
         type="danger"
       />
@@ -255,4 +245,4 @@ const ServiceCategoryList = () => {
   );
 };
 
-export default ServiceCategoryList;
+export default PackageCategoryList;

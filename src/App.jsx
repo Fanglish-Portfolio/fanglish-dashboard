@@ -10,6 +10,14 @@ import Content from "./pages/Content";
 import Settings from "./pages/Settings";
 import ServiceCategory from "./pages/ServiceCategory";
 import ServiceDetailPage from "./components/ServiceCategory/ServiceDetailPage";
+import BlogCategory from "./pages/BlogCategory";
+import BlogDetailPage from "./components/BlogCategory/BlogDetailPage";
+import PackageCategory from "./pages/PackageCategory";
+import PackageDetailPage from "./components/PackageCategory/PackageDetailPage";
+import LanguageClass from "./pages/LanguageClass";
+import LanguageClassDetailPage from "./components/LanguageClass/LanguageClassDetailPage";
+import Testimonials from "./pages/Testimonials";
+import FormDataPage from "./pages/FormData";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -31,10 +39,21 @@ function App() {
               <Route path="/banners" element={<Banners />} />
               <Route path="/service-category" element={<ServiceCategory />} />
               <Route path="/service/:id" element={<ServiceDetailPage />} />
+              <Route path="/blog-category" element={<BlogCategory />} />
+              <Route path="/blog/:id" element={<BlogDetailPage />} />
+              <Route path="/package-category" element={<PackageCategory />} />
+              <Route path="/package/:id" element={<PackageDetailPage />} />
+              <Route path="/language-class" element={<LanguageClass />} />
+              <Route
+                path="/language-class/:id"
+                element={<LanguageClassDetailPage />}
+              />
               <Route path="/users" element={<Users />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/content" element={<Content />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/testimonials" element={<Testimonials />} />
+              <Route path="/form-data" element={<FormDataPage />} />
             </Routes>
           </main>
         </div>

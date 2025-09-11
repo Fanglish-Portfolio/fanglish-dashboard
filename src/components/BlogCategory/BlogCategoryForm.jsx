@@ -64,7 +64,7 @@ const ServiceCategoryForm = ({
         text: formData.text,
         serviceCategory: formData.serviceCategory,
         youtubeLink: formData.youtubeLink,
-        language: formData.language,
+        language: "english",
       };
 
       console.log(data);
@@ -267,8 +267,7 @@ const ServiceCategoryForm = ({
             <div className="flex items-center space-x-2 text-green-600 bg-green-50 p-3 rounded-lg">
               <CheckCircle size={16} />
               <span className="text-sm">
-                Service category {editData ? "updated" : "created"}{" "}
-                successfully!
+                Blog category {editData ? "updated" : "created"} successfully!
               </span>
             </div>
           )}

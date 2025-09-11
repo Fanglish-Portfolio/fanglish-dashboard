@@ -4,9 +4,9 @@ import {
   createServiceCategory,
   updateServiceCategory,
 } from "../../services/categoryService";
-import TextEditor from "./TextEditor";
+import TextEditor from "../ServiceCategory/TextEditor";
 
-const ServiceCategoryForm = ({
+const LanguageClassForm = ({
   category,
   onClose,
   onSuccess,
@@ -18,7 +18,7 @@ const ServiceCategoryForm = ({
     serviceCategory: category,
     image: null,
     youtubeLink: editData?.youtubeLink || "",
-    language: editData?.language || "",
+    language: editData?.language || "english",
   });
   const [imagePreview, setImagePreview] = useState(
     editData?.image?.imageUrl || null
@@ -32,7 +32,6 @@ const ServiceCategoryForm = ({
     if (file) {
       setFormData((prev) => ({ ...prev, image: file }));
 
-      // Create preview
       const reader = new FileReader();
       reader.onload = (e) => {
         setImagePreview(e.target?.result);
@@ -67,8 +66,6 @@ const ServiceCategoryForm = ({
         language: formData.language,
       };
 
-      console.log(data);
-
       if (editData) {
         await updateServiceCategory(editData._id, data);
       } else {
@@ -79,10 +76,10 @@ const ServiceCategoryForm = ({
       setTimeout(() => {
         onSuccess();
         onClose();
-      }, 1500);
+      }, 1200);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to create service category"
+        err instanceof Error ? err.message : "Failed to create language class"
       );
     } finally {
       setIsSubmitting(false);
@@ -99,7 +96,7 @@ const ServiceCategoryForm = ({
       <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">
-            {editData ? "Edit" : "Create"} Service Category
+            {editData ? "Edit" : "Create"} Language Class
           </h2>
           <button
             onClick={onClose}
@@ -110,7 +107,6 @@ const ServiceCategoryForm = ({
         </div>
 
         <form onSubmit={handleSubmit} className="p-4 space-y-4">
-          {/* Title Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Title *
@@ -121,13 +117,12 @@ const ServiceCategoryForm = ({
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, title: e.target.value }))
               }
-              placeholder="Enter title for the service category"
+              placeholder="Enter title"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
           </div>
 
-          {/* Image Upload Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Image {!editData && "*"}
@@ -175,7 +170,6 @@ const ServiceCategoryForm = ({
             )}
           </div>
 
-          {/* Youtube Link Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Youtube Link
@@ -189,32 +183,27 @@ const ServiceCategoryForm = ({
                   youtubeLink: e.target.value,
                 }))
               }
-              placeholder="Enter youtube link for the service category"
+              placeholder="Enter youtube link for the class"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
 
-          {/* Service Category Field */}
-          {/* <div>
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Service Category *
+              Language
             </label>
-            <input
-              type="text"
-              value={formData.serviceCategory}
+            <select
+              value={formData.language}
               onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  serviceCategory: e.target.value,
-                }))
+                setFormData((prev) => ({ ...prev, language: e.target.value }))
               }
-              placeholder="e.g., blog, tutorial, guide"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-          </div> */}
+            >
+              <option value="english">English</option>
+              <option value="german">German</option>
+            </select>
+          </div>
 
-          {/* Text Content Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Text Content *
@@ -231,49 +220,10 @@ const ServiceCategoryForm = ({
             </div>
             <p className="text-xs text-gray-500 mt-2">
               Use the rich text editor to format your content with headings,
-              bold text, lists, and more. HTML tags will be preserved.
+              bold text, lists, and more.
             </p>
           </div>
 
-          {/* Language Field */}
-          {category === "language-class" && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Language
-              </label>
-              <select
-                value={formData.language}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, language: e.target.value }))
-                }
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="english">English</option>
-                <option value="german">German</option>
-              </select>
-            </div>
-          )}
-
-          {/* Error Message */}
-          {error && (
-            <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg">
-              <AlertCircle size={16} />
-              <span className="text-sm">{error}</span>
-            </div>
-          )}
-
-          {/* Success Message */}
-          {success && (
-            <div className="flex items-center space-x-2 text-green-600 bg-green-50 p-3 rounded-lg">
-              <CheckCircle size={16} />
-              <span className="text-sm">
-                Service category {editData ? "updated" : "created"}{" "}
-                successfully!
-              </span>
-            </div>
-          )}
-
-          {/* Form Actions */}
           <div className="flex items-center justify-end space-x-3 pt-3 border-t border-gray-200">
             <button
               type="button"
@@ -295,15 +245,30 @@ const ServiceCategoryForm = ({
                     ? "Updating..."
                     : "Creating..."
                   : editData
-                  ? "Update Category"
-                  : "Create Category"}
+                  ? "Update Class"
+                  : "Create Class"}
               </span>
             </button>
           </div>
+
+          {error && (
+            <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg">
+              <AlertCircle size={16} />
+              <span className="text-sm">{error}</span>
+            </div>
+          )}
+          {success && (
+            <div className="flex items-center space-x-2 text-green-600 bg-green-50 p-3 rounded-lg">
+              <CheckCircle size={16} />
+              <span className="text-sm">
+                Language class {editData ? "updated" : "created"} successfully!
+              </span>
+            </div>
+          )}
         </form>
       </div>
     </div>
   );
 };
 
-export default ServiceCategoryForm;
+export default LanguageClassForm;

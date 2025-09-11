@@ -27,6 +27,8 @@ export const categoryService = {
       if (data?.text) formData.append("text", data.text);
       if (data?.serviceCategory)
         formData.append("serviceCategory", data.serviceCategory);
+      if (data?.youtubeLink) formData.append("youtubeLink", data.youtubeLink);
+      if (data?.language) formData.append("language", data.language);
 
       const response = await api.post("/service-categories", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -34,7 +36,7 @@ export const categoryService = {
 
       return response.data?.data;
     } catch (error) {
-      console.error("Error creating service category:", error);
+      console.error("Error creating category:", error);
       if (axios.isAxiosError(error)) {
         throw new Error(
           error.response?.data?.message || "Failed to create service category"
@@ -59,10 +61,10 @@ export const categoryService = {
 
       return response.data?.data;
     } catch (error) {
-      console.error("Error updating service category:", error);
+      console.error("Error updating category:", error);
       if (axios.isAxiosError(error)) {
         throw new Error(
-          error.response?.data?.message || "Failed to update service category"
+          error.response?.data?.message || "Failed to update category"
         );
       }
       throw error;
@@ -74,10 +76,10 @@ export const categoryService = {
       const response = await api.get(`/service-categories/${id}`);
       return response.data?.data;
     } catch (error) {
-      console.error("Error fetching service category:", error);
+      console.error("Error fetching category:", error);
       if (axios.isAxiosError(error)) {
         throw new Error(
-          error.response?.data?.message || "Failed to fetch service category"
+          error.response?.data?.message || "Failed to fetch category"
         );
       }
       throw error;
@@ -88,10 +90,10 @@ export const categoryService = {
     try {
       await api.delete(`/service-categories/${id}`);
     } catch (error) {
-      console.error("Error deleting service category:", error);
+      console.error("Error deleting category:", error);
       if (axios.isAxiosError(error)) {
         throw new Error(
-          error.response?.data?.message || "Failed to delete service category"
+          error.response?.data?.message || "Failed to delete category"
         );
       }
       throw error;

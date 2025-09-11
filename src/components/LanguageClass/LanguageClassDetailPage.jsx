@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Calendar, Tag, Edit } from "lucide-react";
 import { getServiceCategoryById } from "../../services/categoryService";
-import ServiceCategoryForm from "./ServiceCategoryForm";
+import LanguageClassForm from "./LanguageClassForm";
 
-const ServiceDetailPage = () => {
+const LanguageClassDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [category, setCategory] = useState(null);
@@ -17,10 +17,11 @@ const ServiceDetailPage = () => {
       setLoading(true);
       setError(null);
       const response = await getServiceCategoryById(id);
-      setCategory(response.data || response);
+      const data = response?.data || response;
+      setCategory(data);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to fetch service category"
+        err instanceof Error ? err.message : "Failed to fetch language class"
       );
     } finally {
       setLoading(false);
@@ -32,7 +33,7 @@ const ServiceDetailPage = () => {
   }, [id]);
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/language-class");
   };
 
   const handleEdit = () => {
@@ -41,7 +42,7 @@ const ServiceDetailPage = () => {
 
   const handleEditSuccess = () => {
     setShowEditForm(false);
-    fetchCategory(); // Refresh the data
+    fetchCategory();
   };
 
   if (loading) {
@@ -49,7 +50,7 @@ const ServiceDetailPage = () => {
       <div className="flex items-center justify-center h-64">
         <div className="flex items-center space-x-2 text-gray-500">
           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-          <span>Loading service category...</span>
+          <span>Loading language class...</span>
         </div>
       </div>
     );
@@ -73,7 +74,7 @@ const ServiceDetailPage = () => {
   if (!category) {
     return (
       <div className="text-center py-12">
-        <div className="text-gray-600 mb-4">Service category not found</div>
+        <div className="text-gray-600 mb-4">Language class not found</div>
         <button
           onClick={handleBack}
           className="flex items-center space-x-2 mx-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -88,7 +89,6 @@ const ServiceDetailPage = () => {
   return (
     <div className="flex-1 p-6 overflow-y-auto">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <button
@@ -96,7 +96,7 @@ const ServiceDetailPage = () => {
               className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
             >
               <ArrowLeft size={20} />
-              <span>Back to Service Categories</span>
+              <span>Back to Language Classes</span>
             </button>
 
             <button
@@ -104,7 +104,7 @@ const ServiceDetailPage = () => {
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
               <Edit size={16} />
-              <span>Edit Category</span>
+              <span>Edit Class</span>
             </button>
           </div>
 
@@ -116,7 +116,7 @@ const ServiceDetailPage = () => {
           </div>
 
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            {category.title || "Untitled Service"}
+            {category.title || "Untitled Class"}
           </h1>
 
           <div className="flex items-center space-x-4 text-sm text-gray-500">
@@ -133,7 +133,6 @@ const ServiceDetailPage = () => {
           </div>
         </div>
 
-        {/* Image */}
         {category.image?.imageUrl && (
           <div className="mb-8">
             <img
@@ -146,14 +145,7 @@ const ServiceDetailPage = () => {
                 const parent = target.parentElement;
                 if (parent) {
                   parent.innerHTML = `
-                    <div class="flex items-center justify-center h-64 bg-gray-100 rounded-lg">
-                      <div class="text-gray-400 text-center">
-                        <svg width="48" height="48" fill="currentColor" viewBox="0 0 24 24" class="mx-auto mb-2">
-                          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-                        </svg>
-                        <p>Image not available</p>
-                      </div>
-                    </div>
+                    <div class=\"flex items-center justify-center h-64 bg-gray-100 rounded-lg\">\n                      <div class=\"text-gray-400 text-center\">\n                        <svg width=\"48\" height=\"48\" fill=\"currentColor\" viewBox=\"0 0 24 24\" class=\"mx-auto mb-2\">\n                          <path d=\"M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\"/>\n                        </svg>\n                        <p>Image not available</p>\n                      </div>\n                    </div>
                   `;
                 }
               }}
@@ -161,7 +153,6 @@ const ServiceDetailPage = () => {
           </div>
         )}
 
-        {/* Content */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Content</h2>
           <div
@@ -170,15 +161,14 @@ const ServiceDetailPage = () => {
           />
         </div>
 
-        {/* Metadata */}
         <div className="mt-8 bg-gray-50 rounded-lg p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Service Information
+            Class Information
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Service ID
+                Class ID
               </label>
               <p className="text-sm text-gray-600 font-mono">{category._id}</p>
             </div>
@@ -208,19 +198,18 @@ const ServiceDetailPage = () => {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Edit Form Modal */}
-      {showEditForm && (
-        <ServiceCategoryForm
-          category="services"
-          onClose={() => setShowEditForm(false)}
-          onSuccess={handleEditSuccess}
-          editData={category}
-        />
-      )}
+        {showEditForm && (
+          <LanguageClassForm
+            category="language-class"
+            onClose={() => setShowEditForm(false)}
+            onSuccess={handleEditSuccess}
+            editData={category}
+          />
+        )}
+      </div>
     </div>
   );
 };
 
-export default ServiceDetailPage;
+export default LanguageClassDetailPage;

@@ -6,7 +6,7 @@ import {
   deleteServiceCategory,
 } from "../../services/categoryService";
 import ConfirmModal from "../UI/ConfirmModal";
-import ServiceCategoryForm from "./ServiceCategoryForm";
+import BlogCategoryForm from "./BlogCategoryForm";
 
 const ServiceCategoryList = () => {
   const navigate = useNavigate();
@@ -26,10 +26,10 @@ const ServiceCategoryList = () => {
       setLoading(true);
       setError(null);
       const data = await getServiceCategories();
-      const filteredData = data.filter(
-        (category) => category.serviceCategory === "services"
-      );
       // console.log(data);
+      const filteredData = data.filter(
+        (category) => category.serviceCategory === "blog"
+      );
       setCategories(filteredData);
     } catch (err) {
       setError(
@@ -47,7 +47,7 @@ const ServiceCategoryList = () => {
   }, [categoryRefreshTrigger]);
 
   const handleViewDetail = (category) => {
-    navigate(`/service/${category._id}`);
+    navigate(`/blog/${category._id}`);
   };
 
   const handleCategorySuccess = () => {
@@ -106,10 +106,10 @@ const ServiceCategoryList = () => {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">
-              Service Categories
+              Blog Categories
             </h2>
             <p className="text-gray-600 mt-1">
-              Manage your service categories and content
+              Manage your blog categories and content
             </p>
           </div>
           <div className="flex items-center space-x-3">
@@ -125,7 +125,7 @@ const ServiceCategoryList = () => {
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
               <Plus size={16} />
-              <span>New Category</span>
+              <span>New Blog</span>
             </button>
           </div>
         </div>
@@ -143,10 +143,10 @@ const ServiceCategoryList = () => {
               </svg>
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No service categories yet
+              No blog categories yet
             </h3>
             <p className="text-gray-600 mb-4">
-              Create your first service category to get started
+              Create your first blog category to get started
             </p>
             <button
               onClick={() => setShowCategoryForm(true)}
@@ -233,8 +233,8 @@ const ServiceCategoryList = () => {
 
       {/* Service Category Form Modal */}
       {showCategoryForm && (
-        <ServiceCategoryForm
-          category="services"
+        <BlogCategoryForm
+          category="blog"
           onClose={() => setShowCategoryForm(false)}
           onSuccess={handleCategorySuccess}
         />
