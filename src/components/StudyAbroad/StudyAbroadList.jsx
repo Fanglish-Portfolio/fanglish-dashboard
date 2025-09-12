@@ -163,46 +163,45 @@ export default function StudyAbroadList() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">
-          Study Abroad Universities
-        </h2>
-        <button
-          onClick={handleAddUniversity}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-        >
-          <Plus size={20} className="mr-2" />
-          Add University
-        </button>
-      </div>
+      <div className="flex justify-between items-center"></div>
 
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Filter size={20} className="text-gray-500" />
-          <span className="text-sm font-medium text-gray-700">
-            Filter by country:
-          </span>
-          <select
-            value={selectedCountry}
-            onChange={(e) => handleCountryFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="">All Countries</option>
-            {availableCountries.map((country) => (
-              <option key={country} value={country}>
-                {country}
-              </option>
-            ))}
-          </select>
-          {selectedCountry && (
-            <button
-              onClick={handleClearFilter}
-              className="flex items-center px-2 py-1 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded"
+        <div className="flex justify-between items-center w-full">
+          <div className="flex items-center gap-3">
+            <Filter size={20} className="text-gray-500" />
+            <span className="text-sm font-medium text-gray-700">
+              Filter by country:
+            </span>
+            <select
+              value={selectedCountry}
+              onChange={(e) => handleCountryFilter(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <X size={16} className="mr-1" />
-              Clear
-            </button>
-          )}
+              <option value="">All Countries</option>
+              {availableCountries.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
+            </select>
+            {selectedCountry && (
+              <button
+                onClick={handleClearFilter}
+                className="flex items-center px-2 py-1 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded"
+              >
+                <X size={16} className="mr-1" />
+                Clear
+              </button>
+            )}
+          </div>
+
+          <button
+            onClick={handleAddUniversity}
+            className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            <Plus size={20} className="mr-2" />
+            Add University
+          </button>
         </div>
 
         {selectedCountry && (
@@ -213,18 +212,18 @@ export default function StudyAbroadList() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="flex flex-wrap gap-6">
         {universities.map((university) => (
           <div
             key={university._id}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
           >
-            <div className="h-48 bg-gray-200 relative">
+            <div className="bg-gray-200 relative">
               {university.image?.url ? (
                 <img
                   src={university.image.url}
                   alt={university.name}
-                  className="w-full h-full object-cover"
+                  className="w-[320px] h-[300px] object-cover"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
