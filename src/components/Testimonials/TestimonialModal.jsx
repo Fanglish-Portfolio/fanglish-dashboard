@@ -60,6 +60,7 @@ export default function TestimonialModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const fd = new FormData();
+    console.log(form.program);
     if (form.image) fd.append("image", form.image);
     fd.append("name", form.name);
     fd.append("description", form.description);
@@ -68,6 +69,7 @@ export default function TestimonialModal({
     fd.append("text", form.text);
     fd.append("youtubeLink", form.youtubeLink);
     await onSave(fd, form);
+    console.log(fd.get("program"));
   };
 
   return (

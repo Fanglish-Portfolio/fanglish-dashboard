@@ -27,8 +27,8 @@ export const testimonialService = {
       if (data.image) formData.append("image", data.image);
       if (data.name) formData.append("name", data.name);
       if (data.description) formData.append("description", data.description);
-      if (data.university) formData.append("university", data.university);
-      if (data.program) formData.append("program", data.program);
+      formData.append("university", data.university || "");
+      formData.append("program", data.program || "");
       if (data.text) formData.append("text", data.text);
       if (data.youtubeLink) formData.append("youtubeLink", data.youtubeLink);
 
@@ -46,15 +46,18 @@ export const testimonialService = {
     }
   },
   async update(id, data) {
+    // console.log(data);
     try {
       const formData = new FormData();
       if (data.image) formData.append("image", data.image);
       if (data.name) formData.append("name", data.name);
       if (data.description) formData.append("description", data.description);
-      if (data.university) formData.append("university", data.university);
-      if (data.program) formData.append("program", data.program);
+      formData.append("university", data.university || "");
+      formData.append("program", data.program || "");
       if (data.text) formData.append("text", data.text);
       if (data.youtubeLink) formData.append("youtubeLink", data.youtubeLink);
+
+      // console.log("formData.get(program)", formData.get("program"));
 
       const response = await api.patch(`/testimonials/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
