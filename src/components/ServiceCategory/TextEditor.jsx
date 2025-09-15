@@ -13,6 +13,8 @@ import {
   Undo,
   Redo,
   Code,
+  Palette,
+  Type,
 } from "lucide-react";
 
 const TextEditor = ({ content, onChange, placeholder, compact = false }) => {
@@ -28,6 +30,8 @@ const TextEditor = ({ content, onChange, placeholder, compact = false }) => {
     ul: false,
     ol: false,
   });
+  const [currentFontSize, setCurrentFontSize] = useState("16px");
+  const [currentColor, setCurrentColor] = useState("#000000");
 
   useEffect(() => {
     if (
@@ -66,6 +70,32 @@ const TextEditor = ({ content, onChange, placeholder, compact = false }) => {
     if (url) {
       executeCommand("insertImage", url);
     }
+  };
+
+  const changeFontSize = (size) => {
+    setCurrentFontSize(size);
+    executeCommand("fontSize", "7");
+    const selection = document.getSelection();
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      const span = document.createElement("span");
+      span.style.fontSize = size;
+      try {
+        range.surroundContents(span);
+      } catch (e) {
+        span.appendChild(range.extractContents());
+        range.insertNode(span);
+      }
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    handleContentChange();
+  };
+
+  const changeTextColor = (color) => {
+    setCurrentColor(color);
+    executeCommand("foreColor", color);
+    handleContentChange();
   };
 
   const isSelectionInsideEditor = () => {
@@ -214,6 +244,45 @@ const TextEditor = ({ content, onChange, placeholder, compact = false }) => {
               command="underline"
               active={active.underline}
             />
+          </div>
+
+          <div className="flex items-center space-x-1 border-r border-gray-300 pr-3">
+            <div className="flex items-center space-x-1">
+              <Type size={16} className="text-gray-600" />
+              <select
+                className={`text-sm border border-gray-200 rounded px-2 py-1 ${
+                  compact ? "text-xs" : ""
+                }`}
+                value={currentFontSize}
+                onChange={(e) => changeFontSize(e.target.value)}
+              >
+                <option value="12px">12px</option>
+                <option value="14px">14px</option>
+                <option value="16px">16px</option>
+                <option value="18px">18px</option>
+                <option value="20px">20px</option>
+                <option value="24px">24px</option>
+                <option value="28px">28px</option>
+                <option value="32px">32px</option>
+                <option value="36px">36px</option>
+                <option value="48px">48px</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-1 border-r border-gray-300 pr-3">
+            <div className="flex items-center space-x-1">
+              <Palette size={16} className="text-gray-600" />
+              <input
+                type="color"
+                value={currentColor}
+                onChange={(e) => changeTextColor(e.target.value)}
+                className={`w-8 h-8 border border-gray-200 rounded cursor-pointer ${
+                  compact ? "w-6 h-6" : ""
+                }`}
+                title="Text Color"
+              />
+            </div>
           </div>
 
           <div className="flex items-center space-x-1 border-r border-gray-300 pr-3">
