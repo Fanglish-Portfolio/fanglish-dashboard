@@ -3,9 +3,9 @@ import api from "../api/axios";
 export const studyAbroadService = {
   getAllUniversities: async (page = 1, limit = 10, country = null) => {
     try {
-      let url = `study-abroad?page=${page}&limit=${limit}`;
+      let url = `study-abroad`;
       if (country) {
-        url += `&country=${encodeURIComponent(country)}`;
+        url += `/{encodeURIComponent(country)}`;
       }
       const response = await api.get(url);
       return response.data;

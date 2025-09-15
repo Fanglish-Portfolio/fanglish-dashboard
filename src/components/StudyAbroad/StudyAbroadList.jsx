@@ -14,11 +14,10 @@ import {
 } from "lucide-react";
 
 export default function StudyAbroadList() {
-  const [universities, setUniversities] = useState([]);
+  const [allUniversities, setAllUniversities] = useState([]);
+  const [filteredUniversities, setFilteredUniversities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [pagination, setPagination] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingUniversity, setEditingUniversity] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -28,24 +27,25 @@ export default function StudyAbroadList() {
   const [availableCountries, setAvailableCountries] = useState([]);
 
   useEffect(() => {
-    fetchUniversities();
-  }, [currentPage, selectedCountry]);
-
-  useEffect(() => {
-    fetchAllCountries();
+    fetchAllUniversities();
   }, []);
 
-  const fetchUniversities = async () => {
+  useEffect(() => {
+    filterUniversities();
+  }, [allUniversities, selectedCountry]);
+
+  const fetchAllUniversities = async () => {
     try {
       setLoading(true);
-      const response = await studyAbroadService.getAllUniversities(
-        currentPage,
-        10,
-        selectedCountry || null
-      );
-      setUniversities(response.data);
-      setPagination(response.pagination);
+      const response = await studyAbroadService.getAllUniversities(1, 1000);
+      setAllUniversities(response.data);
       setError(null);
+
+      // Extract unique countries from the data
+      const countries = [
+        ...new Set(response.data.map((uni) => uni.country)),
+      ].sort();
+      setAvailableCountries(countries);
     } catch (err) {
       setError("Failed to fetch universities");
       console.error(err);
@@ -54,15 +54,14 @@ export default function StudyAbroadList() {
     }
   };
 
-  const fetchAllCountries = async () => {
-    try {
-      const response = await studyAbroadService.getAllUniversities(1, 1000);
-      const countries = [
-        ...new Set(response.data.map((uni) => uni.country)),
-      ].sort();
-      setAvailableCountries(countries);
-    } catch (err) {
-      console.error("Failed to fetch countries:", err);
+  const filterUniversities = () => {
+    if (!selectedCountry) {
+      setFilteredUniversities(allUniversities);
+    } else {
+      const filtered = allUniversities.filter(
+        (university) => university.country === selectedCountry
+      );
+      setFilteredUniversities(filtered);
     }
   };
 
@@ -77,7 +76,7 @@ export default function StudyAbroadList() {
     setDeleteLoading(true);
     try {
       await studyAbroadService.deleteUniversity(deletingUniversity._id);
-      fetchUniversities();
+      fetchAllUniversities();
       setIsDeleteModalOpen(false);
       setDeletingUniversity(null);
     } catch (err) {
@@ -93,18 +92,12 @@ export default function StudyAbroadList() {
     setDeletingUniversity(null);
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
   const handleCountryFilter = (country) => {
     setSelectedCountry(country);
-    setCurrentPage(1);
   };
 
   const handleClearFilter = () => {
     setSelectedCountry("");
-    setCurrentPage(1);
   };
 
   const handleAddUniversity = () => {
@@ -127,7 +120,7 @@ export default function StudyAbroadList() {
       } else {
         await studyAbroadService.createUniversity(formData);
       }
-      fetchUniversities();
+      fetchAllUniversities();
     } catch (err) {
       setError("Failed to save university");
       throw err;
@@ -152,7 +145,7 @@ export default function StudyAbroadList() {
       <div className="bg-red-50 border border-red-200 rounded-lg p-4">
         <p className="text-red-600">{error}</p>
         <button
-          onClick={fetchUniversities}
+          onClick={fetchAllUniversities}
           className="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
         >
           Retry
@@ -168,10 +161,10 @@ export default function StudyAbroadList() {
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
-            <Filter size={20} className="text-gray-500" />
+            {/* <Filter size={20} className="text-gray-500" />
             <span className="text-sm font-medium text-gray-700">
               Filter by country:
-            </span>
+            </span> */}
             <select
               value={selectedCountry}
               onChange={(e) => handleCountryFilter(e.target.value)}
@@ -199,21 +192,21 @@ export default function StudyAbroadList() {
             onClick={handleAddUniversity}
             className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
-            <Plus size={20} className="mr-2" />
-            Add University
+            <Plus size={20} className="" />
+            <span className="hidden md:block ms-2"> Add University</span>
           </button>
         </div>
 
-        {selectedCountry && (
+        {/* {selectedCountry && (
           <div className="text-sm text-gray-600">
             Showing universities from:{" "}
             <span className="font-medium text-gray-900">{selectedCountry}</span>
           </div>
-        )}
+        )} */}
       </div>
 
       <div className="flex flex-wrap gap-6">
-        {universities.map((university) => (
+        {filteredUniversities.map((university) => (
           <div
             key={university._id}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
@@ -280,7 +273,7 @@ export default function StudyAbroadList() {
         ))}
       </div>
 
-      {pagination.totalPages > 1 && (
+      {/* {pagination.totalPages > 1 && (
         <div className="flex justify-center items-center space-x-2">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
@@ -302,9 +295,9 @@ export default function StudyAbroadList() {
             Next
           </button>
         </div>
-      )}
+      )} */}
 
-      {universities.length === 0 && (
+      {filteredUniversities.length === 0 && (
         <div className="text-center py-12">
           <Building2 size={48} className="mx-auto text-gray-400 mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">

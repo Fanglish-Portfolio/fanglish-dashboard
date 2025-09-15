@@ -101,31 +101,31 @@ const ServiceCategoryList = () => {
   }
 
   return (
-    <div className="flex-1 p-6 overflow-y-auto">
+    <div className="flex-1 py-6 overflow-y-auto">
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex items-center justify-end">
+          {/* <div>
             <h2 className="text-2xl font-bold text-gray-900">
               Blog Categories
             </h2>
             <p className="text-gray-600 mt-1">
               Manage your blog categories and content
             </p>
-          </div>
+          </div> */}
           <div className="flex items-center space-x-3">
             <button
               onClick={fetchCategories}
               className="flex items-center space-x-2 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
             >
               <RefreshCw size={16} />
-              <span>Refresh</span>
+              <span className="hidden md:block">Refresh</span>
             </button>
             <button
               onClick={() => setShowCategoryForm(true)}
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
               <Plus size={16} />
-              <span>New Blog</span>
+              <span className="hidden md:block">New Blog</span>
             </button>
           </div>
         </div>
@@ -153,7 +153,7 @@ const ServiceCategoryList = () => {
               className="flex items-center space-x-2 mx-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
               <Plus size={16} />
-              <span>Create First Category</span>
+              <span className="hidden md:block">Create First Category</span>
             </button>
           </div>
         ) : (
@@ -213,14 +213,14 @@ const ServiceCategoryList = () => {
                         className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
                       >
                         <Eye size={14} />
-                        <span>View</span>
+                        <span className="hidden md:block">View</span>
                       </button>
                       <button
                         onClick={() => openDelete(category._id)}
                         className="flex items-center space-x-1 text-red-600 hover:text-red-700 text-sm font-medium transition-colors"
                       >
                         <Trash2 size={14} />
-                        <span>Delete</span>
+                        <span className="hidden md:block">Delete</span>
                       </button>
                     </div>
                   </div>

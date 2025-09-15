@@ -60,10 +60,10 @@ export default function Header({ onMenuToggle }) {
         </div>
 
         <div className="flex items-center space-x-4">
-          <button className="relative text-gray-600 hover:text-gray-900">
+          {/* <button className="relative text-gray-600 hover:text-gray-900">
             <Bell size={20} />
             <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
-          </button>
+          </button> */}
 
           <div className="relative">
             <button
