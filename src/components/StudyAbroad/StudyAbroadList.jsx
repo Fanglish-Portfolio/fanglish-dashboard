@@ -246,7 +246,7 @@ export default function StudyAbroadList() {
         )} */}
       </div>
 
-      <div className="flex flex-wrap justify-between">
+      <div className="flex flex-wrap justify-between gap-6">
         {filteredUniversities.map((university) => (
           <div
             key={university._id}
