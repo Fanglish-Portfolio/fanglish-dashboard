@@ -4,7 +4,7 @@ import {
   createServiceCategory,
   updateServiceCategory,
 } from "../../services/categoryService";
-import TextEditor from "../ServiceCategory/TextEditor";
+import TinyMCETextEditor from "../UI/TinyMCETextEditor";
 
 const LanguageClassForm = ({
   category,
@@ -208,16 +208,14 @@ const LanguageClassForm = ({
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Text Content *
             </label>
-            <div className="border border-gray-300 rounded-lg overflow-hidden">
-              <TextEditor
-                content={formData.text}
-                onChange={(content) =>
-                  setFormData((prev) => ({ ...prev, text: content }))
-                }
-                placeholder="Enter your content here..."
-                compact={true}
-              />
-            </div>
+            <TinyMCETextEditor
+              content={formData.text}
+              onChange={(content) =>
+                setFormData((prev) => ({ ...prev, text: content }))
+              }
+              placeholder="Enter your content here..."
+              compact={true}
+            />
             <p className="text-xs text-gray-500 mt-2">
               Use the rich text editor to format your content with headings,
               bold text, lists, and more.
