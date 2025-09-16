@@ -28,24 +28,28 @@ const menuItems = [
     label: "Service Category",
     icon: Layers,
     path: "/service-category",
+    secpath: "service",
   },
   {
     id: "blog-category",
     label: "Blog Category",
     icon: Layers,
     path: "/blog-category",
+    secpath: "blog",
   },
   {
     id: "package-category",
     label: "Package Category",
     icon: Layers,
     path: "/package-category",
+    secpath: "package",
   },
   {
     id: "language-class",
     label: "Language Class",
     icon: Layers,
     path: "/language-class",
+    secpath: "language",
   },
   {
     id: "study-abroad",
@@ -91,7 +95,9 @@ export default function Sidebar({ isOpen, onToggle }) {
         <nav className="mt-6">
           {menuItems.map((item) => {
             const Icon = item.icon;
-            const isActive = location.pathname === item.path;
+            const isActive =
+              location.pathname === item.path ||
+              location.pathname.includes(item.secpath);
             return (
               <Link
                 key={item.id}

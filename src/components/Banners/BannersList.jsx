@@ -168,7 +168,7 @@ export default function BannersList() {
           <div className="text-sm text-gray-600">Total Banners</div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow">
+        {/* <div className="bg-white p-4 rounded-lg shadow">
           <div className="text-2xl font-bold text-green-600">
             {banners.length}
           </div>
@@ -180,7 +180,7 @@ export default function BannersList() {
             {filteredBanners.length}
           </div>
           <div className="text-sm text-gray-600">Filtered Results</div>
-        </div>
+        </div> */}
       </div>
 
       {isLoading && (

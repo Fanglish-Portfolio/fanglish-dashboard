@@ -32,7 +32,7 @@ const ServiceDetailPage = () => {
   }, [id]);
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/service-category");
   };
 
   const handleEdit = () => {

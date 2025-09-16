@@ -209,7 +209,7 @@ export default function StudyAbroadList() {
         {filteredUniversities.map((university) => (
           <div
             key={university._id}
-            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+            className="bg-white w-[320px] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
           >
             <div className="bg-gray-200 relative">
               {university.image?.url ? (

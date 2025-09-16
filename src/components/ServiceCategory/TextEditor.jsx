@@ -248,30 +248,6 @@ const TextEditor = ({ content, onChange, placeholder, compact = false }) => {
 
           <div className="flex items-center space-x-1 border-r border-gray-300 pr-3">
             <div className="flex items-center space-x-1">
-              <Type size={16} className="text-gray-600" />
-              <select
-                className={`text-sm border border-gray-200 rounded px-2 py-1 ${
-                  compact ? "text-xs" : ""
-                }`}
-                value={currentFontSize}
-                onChange={(e) => changeFontSize(e.target.value)}
-              >
-                <option value="12px">12px</option>
-                <option value="14px">14px</option>
-                <option value="16px">16px</option>
-                <option value="18px">18px</option>
-                <option value="20px">20px</option>
-                <option value="24px">24px</option>
-                <option value="28px">28px</option>
-                <option value="32px">32px</option>
-                <option value="36px">36px</option>
-                <option value="48px">48px</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-1 border-r border-gray-300 pr-3">
-            <div className="flex items-center space-x-1">
               <Palette size={16} className="text-gray-600" />
               <input
                 type="color"
@@ -316,16 +292,16 @@ const TextEditor = ({ content, onChange, placeholder, compact = false }) => {
             />
           </div>
 
-          <div className="flex items-center space-x-1 border-r border-gray-300 pr-3">
+          {/* <div className="flex items-center space-x-1 border-r border-gray-300 pr-3">
             <ToolbarButton icon={<Link size={16} />} onClick={insertLink} />
             <ToolbarButton icon={<Image size={16} />} onClick={insertImage} />
-          </div>
+          </div> */}
 
-          <ToolbarButton
+          {/* <ToolbarButton
             icon={<Code size={16} />}
             onClick={() => setIsCodeView(!isCodeView)}
             active={isCodeView}
-          />
+          /> */}
         </div>
       </div>
 
