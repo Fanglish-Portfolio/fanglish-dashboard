@@ -25,6 +25,7 @@ export default function StudyAbroadList() {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [availableCountries, setAvailableCountries] = useState([]);
+  const [activeTab, setActiveTab] = useState("all");
 
   useEffect(() => {
     fetchAllUniversities();
@@ -32,7 +33,7 @@ export default function StudyAbroadList() {
 
   useEffect(() => {
     filterUniversities();
-  }, [allUniversities, selectedCountry]);
+  }, [allUniversities, selectedCountry, activeTab]);
 
   const fetchAllUniversities = async () => {
     try {
@@ -55,14 +56,23 @@ export default function StudyAbroadList() {
   };
 
   const filterUniversities = () => {
-    if (!selectedCountry) {
-      setFilteredUniversities(allUniversities);
-    } else {
-      const filtered = allUniversities.filter(
+    let filtered = allUniversities;
+
+    // Filter by type (university/college)
+    if (activeTab !== "all") {
+      filtered = filtered.filter(
+        (university) => university.type?.toLowerCase() === activeTab
+      );
+    }
+
+    // Filter by country
+    if (selectedCountry) {
+      filtered = filtered.filter(
         (university) => university.country === selectedCountry
       );
-      setFilteredUniversities(filtered);
     }
+
+    setFilteredUniversities(filtered);
   };
 
   const handleDeleteClick = (university) => {
@@ -161,31 +171,62 @@ export default function StudyAbroadList() {
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
-            {/* <Filter size={20} className="text-gray-500" />
-            <span className="text-sm font-medium text-gray-700">
-              Filter by country:
-            </span> */}
-            <select
-              value={selectedCountry}
-              onChange={(e) => handleCountryFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">All Countries</option>
-              {availableCountries.map((country) => (
-                <option key={country} value={country}>
-                  {country}
-                </option>
-              ))}
-            </select>
-            {selectedCountry && (
-              <button
-                onClick={handleClearFilter}
-                className="flex items-center px-2 py-1 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded"
+            <div className="flex items-center gap-3">
+              <select
+                value={selectedCountry}
+                onChange={(e) => handleCountryFilter(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <X size={16} className="mr-1" />
-                Clear
+                <option value="">All Countries</option>
+                {availableCountries.map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </select>
+              {selectedCountry && (
+                <button
+                  onClick={handleClearFilter}
+                  className="flex items-center px-2 py-1 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded"
+                >
+                  <X size={16} className="mr-1" />
+                  Clear
+                </button>
+              )}
+            </div>
+            {/* Tab Filter */}
+            <div className="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg w-fit">
+              <button
+                onClick={() => setActiveTab("all")}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                  activeTab === "all"
+                    ? "bg-white text-blue-600 shadow-sm"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                All
               </button>
-            )}
+              <button
+                onClick={() => setActiveTab("university")}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                  activeTab === "university"
+                    ? "bg-white text-blue-600 shadow-sm"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                Universities
+              </button>
+              <button
+                onClick={() => setActiveTab("college")}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                  activeTab === "college"
+                    ? "bg-white text-blue-600 shadow-sm"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                Colleges
+              </button>
+            </div>
           </div>
 
           <button
@@ -193,7 +234,7 @@ export default function StudyAbroadList() {
             className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             <Plus size={20} className="" />
-            <span className="hidden md:block ms-2"> Add University</span>
+            <span className="hidden md:block ms-2"> Add</span>
           </button>
         </div>
 
@@ -205,7 +246,7 @@ export default function StudyAbroadList() {
         )} */}
       </div>
 
-      <div className="flex flex-wrap gap-6">
+      <div className="flex flex-wrap justify-between">
         {filteredUniversities.map((university) => (
           <div
             key={university._id}

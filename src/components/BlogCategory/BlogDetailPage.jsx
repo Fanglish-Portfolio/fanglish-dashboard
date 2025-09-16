@@ -73,7 +73,7 @@ const ServiceDetailPage = () => {
   if (!category) {
     return (
       <div className="text-center py-12">
-        <div className="text-gray-600 mb-4">Service category not found</div>
+        <div className="text-gray-600 mb-4">Blog category not found</div>
         <button
           onClick={handleBack}
           className="flex items-center space-x-2 mx-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -96,7 +96,7 @@ const ServiceDetailPage = () => {
               className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
             >
               <ArrowLeft size={20} />
-              <span>Back to Service Categories</span>
+              <span>Back to Blog Categories</span>
             </button>
 
             <button
@@ -104,7 +104,7 @@ const ServiceDetailPage = () => {
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
               <Edit size={16} />
-              <span>Edit Category</span>
+              <span>Edit Blog Category</span>
             </button>
           </div>
 

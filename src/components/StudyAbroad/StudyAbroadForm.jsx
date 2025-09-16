@@ -141,7 +141,7 @@ export default function StudyAbroadForm({
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b">
           <h2 className="text-xl font-semibold text-gray-900">
-            {university ? "Edit University" : "Add University"}
+            {university ? "Edit" : "Add"}
           </h2>
           <button
             onClick={handleClose}
@@ -287,7 +287,7 @@ export default function StudyAbroadForm({
               disabled={loading}
               className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Saving..." : university ? "Update" : "Add"} University
+              {loading ? "Saving..." : university ? "Update" : "Add"}
             </button>
           </div>
         </form>
