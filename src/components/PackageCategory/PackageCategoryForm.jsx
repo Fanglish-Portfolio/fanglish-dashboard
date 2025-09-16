@@ -4,7 +4,7 @@ import {
   createServiceCategory,
   updateServiceCategory,
 } from "../../services/categoryService";
-import TextEditor from "../ServiceCategory/TextEditor";
+import TipTapEditor from "../UI/TipTapEditor";
 
 const PackageCategoryForm = ({
   category,
@@ -191,7 +191,7 @@ const PackageCategoryForm = ({
               Text Content *
             </label>
             <div className="border border-gray-300 rounded-lg overflow-hidden">
-              <TextEditor
+              <TipTapEditor
                 content={formData.text}
                 onChange={(content) =>
                   setFormData((prev) => ({ ...prev, text: content }))
