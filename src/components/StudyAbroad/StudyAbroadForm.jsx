@@ -216,7 +216,7 @@ export default function StudyAbroadForm({
               Website URL
             </label>
             <input
-              type="url"
+              type="text"
               name="url"
               value={formData.url}
               onChange={handleInputChange}
