@@ -158,7 +158,7 @@ export default function BannerModal({
                     </button>
                   </div>
                   <p className="text-xs text-gray-400">
-                    PNG, JPG, GIF up to 10MB
+                    PNG, JPG, GIF up to 5MB
                   </p>
                 </div>
               )}

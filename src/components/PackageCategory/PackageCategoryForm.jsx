@@ -137,9 +137,7 @@ const PackageCategoryForm = ({
                   </label>
                   <span> or drag and drop</span>
                 </div>
-                <p className="text-xs text-gray-500">
-                  PNG, JPG, GIF up to 10MB
-                </p>
+                <p className="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
                 <input
                   id="image-upload"
                   type="file"
